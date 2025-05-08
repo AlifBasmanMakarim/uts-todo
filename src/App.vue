@@ -9,6 +9,7 @@
     <ul class="task-list">
       <li v-for="(task, index) in tasks" :key="index" class="task-item">
         {{ task.text }}
+        <button class="delete" @click="removeTask(index)">Batal</button>
       </li>
     </ul>
   </div>
@@ -25,6 +26,10 @@ function addTask() {
     tasks.value.push({ text: newTask.value, completed: false })
     newTask.value = ''
   }
+}
+
+function removeTask(index) {
+  tasks.value.splice(index, 1)
 }
 </script>
 
@@ -82,5 +87,19 @@ function addTask() {
   padding: 0.5rem 0;
   border-bottom: 1px solid #3607e1;
   color: white;
+}
+
+.task-item .delete {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.task-item .delete:hover {
+  background-color: #c0392b;
 }
 </style>
