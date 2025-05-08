@@ -2,9 +2,15 @@
   <div class="app">
     <h1 class="title">Kegabutan</h1>
     <div class="input-group">
-      <input v-model="newTask" placeholder="Tambahkan kegiatan baru..." />
+      <input v-model="newTask" @keyup.enter="addTask" placeholder="Tambahkan kegiatan baru..." />
       <button @click="addTask">Tambah</button>
     </div>
+
+    <ul class="task-list">
+      <li v-for="(task, index) in tasks" :key="index" class="task-item">
+        {{ task.text }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -12,40 +18,26 @@
 import { ref } from 'vue'
 
 const newTask = ref('')
+const tasks = ref([])
 
 function addTask() {
-  console.log('Tambah task:', newTask.value)
+  if (newTask.value.trim()) {
+    tasks.value.push({ text: newTask.value, completed: false })
+    newTask.value = ''
+  }
 }
 </script>
 
 <style scoped>
-/* style dari tahap sebelumnya tetap */
-
-.input-group {
-  display: flex;
-  gap: 0.5rem;
+/* Tambahkan */
+.task-list {
+  list-style: none;
+  padding: 0;
 }
 
-.input-group input {
-  flex: 1;
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid #06a960;
-  font-size: 1rem;
-}
-
-.input-group button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #3498db;
+.task-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #3607e1;
   color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.input-group button:hover {
-  background-color: #2980b9;
 }
 </style>
