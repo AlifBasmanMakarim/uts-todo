@@ -8,7 +8,8 @@
 
     <ul class="task-list">
       <li v-for="(task, index) in tasks" :key="index" class="task-item">
-        {{ task.text }}
+        <input type="checkbox" v-model="task.completed" class="checkbox" />
+        <span :class="{ completed: task.completed }">{{ task.text }}</span>
         <button class="delete" @click="removeTask(index)">Batal</button>
       </li>
     </ul>
@@ -84,9 +85,28 @@ function removeTask(index) {
 }
 
 .task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.5rem 0;
   border-bottom: 1px solid #3607e1;
   color: white;
+}
+
+.task-item span {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.task-item span.completed {
+  text-decoration: line-through;
+  color: #ff0000;
+}
+
+.task-item .checkbox {
+  accent-color: #27ae60;
+  width: 1rem;
+  height: 1rem;
 }
 
 .task-item .delete {
