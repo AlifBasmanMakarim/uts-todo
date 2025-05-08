@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h1 class="title">Kegabutan</h1>
+    <h1 class="title">TO DO LIST</h1>
     <div class="input-group">
       <input v-model="newTask" @keyup.enter="addTask" placeholder="Tambahkan kegiatan baru..." />
       <button @click="addTask">Tambah</button>
