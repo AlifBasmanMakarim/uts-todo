@@ -6,8 +6,15 @@
       <button @click="addTask">Tambah</button>
     </div>
 
+    <div class="filter">
+      <label>
+        <input type="checkbox" v-model="showOnlyIncomplete" />
+        Tampilkan hanya yang belum selesai
+      </label>
+    </div>
+
     <ul class="task-list">
-      <li v-for="(task, index) in tasks" :key="index" class="task-item">
+      <li v-for="(task, index) in filteredTasks" :key="index" class="task-item">
         <input type="checkbox" v-model="task.completed" class="checkbox" />
         <span :class="{ completed: task.completed }">{{ task.text }}</span>
         <button class="delete" @click="removeTask(index)">Batal</button>
@@ -17,10 +24,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const newTask = ref('')
 const tasks = ref([])
+const showOnlyIncomplete = ref(false)
 
 function addTask() {
   if (newTask.value.trim()) {
@@ -32,6 +40,12 @@ function addTask() {
 function removeTask(index) {
   tasks.value.splice(index, 1)
 }
+
+const filteredTasks = computed(() => {
+  return showOnlyIncomplete.value
+    ? tasks.value.filter(task => !task.completed)
+    : tasks.value
+})
 </script>
 
 <style scoped>
@@ -77,6 +91,12 @@ function removeTask(index) {
 
 .input-group button:hover {
   background-color: #2980b9;
+}
+
+.filter {
+  margin: 1rem 0;
+  text-align: center;
+  color: white;
 }
 
 .task-list {
